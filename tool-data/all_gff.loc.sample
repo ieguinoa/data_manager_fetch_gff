@@ -1,0 +1,3 @@
+#The all_gff.loc file has this format:
+#
+#<id> <dbkey> <name>  <path_to_gff_file>
