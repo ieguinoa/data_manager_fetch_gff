@@ -39,19 +39,20 @@ def stop_err(msg):
 
 
 def get_dbkey_dbname_id_name( params, dbkey_description=None ):
-    dbkey = params['param_dict']['dbkey_source']['dbkey']
+#    dbkey = params['param_dict']['dbkey_source']['dbkey']
     #TODO: ensure sequence_id is unique and does not already appear in location file
     sequence_id = params['param_dict']['sequence_id']
     if not sequence_id:
         sequence_id = dbkey #uuid.uuid4() generate and use an uuid instead?
     
-    if params['param_dict']['dbkey_source']['dbkey_source_selector'] == 'new':
-        dbkey_name = params['param_dict']['dbkey_source']['dbkey_name']
-        if not dbkey_name:
-            dbkey_name = dbkey
-    else:
-        dbkey_name = None
-    
+#    if params['param_dict']['dbkey_source']['dbkey_source_selector'] == 'new':
+#        dbkey_name = params['param_dict']['dbkey_source']['dbkey_name']
+#        if not dbkey_name:
+#            dbkey_name = dbkey
+#    else:
+#        dbkey_name = None
+    dbkey = params['param_dict']['dbkey'] 
+    dbkey_name = dbkey_description
     sequence_name = params['param_dict']['sequence_name']
     if not sequence_name:
         sequence_name = dbkey_description
@@ -360,14 +361,8 @@ def _stream_fasta_to_file( fasta_stream, target_directory, dbkey, dbkey_name, se
 
     #sort_fasta( fasta_filename, params['param_dict']['sorting']['sort_selector'], params )
     
-    dbkey_dict = None
-    if dbkey_name:
-        #do len calc here
-        #len_base_name = "%s.len" % ( dbkey )
-        #compute_fasta_length( fasta_filename, os.path.join( target_directory, len_base_name ), keep_first_word=True )
-        dbkey_dict = dict( value=dbkey, name=dbkey_name, len_path='' )
     
-    return [ ( '__dbkeys__', dbkey_dict ), ( DATA_TABLE_NAME, dict( value=sequence_id, dbkey=dbkey, name=sequence_name, path=fasta_base_filename ) ) ]
+    return [ ( DATA_TABLE_NAME, dict( value=sequence_id, dbkey=dbkey, name=sequence_name, path=fasta_base_filename ) ) ]
 
 
 def compute_fasta_length( fasta_file, out_file, keep_first_word=False ):
@@ -407,15 +402,7 @@ def _create_symlink( input_filename, target_directory, dbkey, dbkey_name, sequen
     fasta_base_filename = "%s.fa" % sequence_id
     fasta_filename = os.path.join( target_directory, fasta_base_filename )
     os.symlink( input_filename, fasta_filename )
-    
-    dbkey_dict = None
-    if dbkey_name:
-        #do len calc here
-        len_base_name = "%s.len" % ( dbkey )
-        compute_fasta_length( fasta_filename, os.path.join( target_directory, len_base_name ), keep_first_word=True )
-        dbkey_dict = dict( value=dbkey, name=dbkey_name, len_path=len_base_name )
-    
-    return [ ( '__dbkeys__', dbkey_dict ), ( DATA_TABLE_NAME, dict( value=sequence_id, dbkey=dbkey, name=sequence_name, path=fasta_base_filename ) ) ]
+    return [  ( DATA_TABLE_NAME, dict( value=sequence_id, dbkey=dbkey, name=sequence_name, path=fasta_base_filename ) ) ]
 
 
 REFERENCE_SOURCE_TO_DOWNLOAD = dict( ucsc=download_from_ucsc, ncbi=download_from_ncbi, url=download_from_url, history=download_from_history, directory=copy_from_directory )

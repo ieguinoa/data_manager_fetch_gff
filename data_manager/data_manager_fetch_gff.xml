@@ -3,11 +3,7 @@
     <command><![CDATA[
        python "$__tool_directory__"/data_manager_fetch_gff.py "${out_file}"
        --type $file_type
-       #if str( $dbkey_source.dbkey_source_selector ) == 'existing':
-       --dbkey_description ${ dbkey_source.dbkey.get_display_text() }
-       #else
-       --dbkey_description "${ dbkey_source.dbkey_name or $dbkey_source.dbkey }"
-       #end if
+       --dbkey_description ${ dbkey.get_display_text() }
         
     ]]></command>
     <inputs>
@@ -16,19 +12,7 @@
                 <option value="full">GFF with complete features</option>
             </param>
  
-        <conditional name="dbkey_source">
-            <param name="dbkey_source_selector" type="select" label="Use existing dbkey or create a new one.">
-                <option value="existing" selected="True">Existing</option>
-                <option value="new">New</option>
-            </param>
-            <when value="existing">
-                <param name="dbkey" type="genomebuild" label="DBKEY to assign to data" />
-            </when>
-            <when value="new">
-                <param type="text" name="dbkey" value="" label="dbkey" optional="False" />
-                <param type="text" name="dbkey_name" value="" label="Display name for dbkey" />
-            </when>
-        </conditional>
+        <param name="dbkey" type="genomebuild" label="DBKEY to assign to data" />
         <param type="text" name="sequence_name" value="" label="Name of sequence" />
         <param type="text" name="sequence_id" value="" label="ID for sequence" />
         <conditional name="reference_source">
