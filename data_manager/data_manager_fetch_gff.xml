@@ -2,16 +2,10 @@
     <description>fetching</description>
     <command><![CDATA[
        python "$__tool_directory__"/data_manager_fetch_gff.py "${out_file}"
-       --type $file_type
        --dbkey_description ${ dbkey.get_display_text() }
         
     ]]></command>
     <inputs>
-         <param name="file_type" type="select" label="GFF file with only one representative transcript per gene (for htseq-count use) or full features file">
-                <option value="representative">Representative GFF</option>
-                <option value="full">GFF with complete features</option>
-            </param>
- 
         <param name="dbkey" type="genomebuild" label="DBKEY to assign to data" />
         <param type="text" name="sequence_name" value="" label="Name of sequence" />
         <param type="text" name="sequence_id" value="" label="ID for sequence" />
