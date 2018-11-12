@@ -39,7 +39,7 @@ def stop_err(msg):
 
 
 def get_dbkey_dbname_id_name( params, dbkey_description=None ):
-#    dbkey = params['param_dict']['dbkey_source']['dbkey']
+    dbkey = params['param_dict']['dbkey']
     #TODO: ensure sequence_id is unique and does not already appear in location file
     sequence_id = params['param_dict']['sequence_id']
     if not sequence_id:
@@ -50,8 +50,7 @@ def get_dbkey_dbname_id_name( params, dbkey_description=None ):
 #        if not dbkey_name:
 #            dbkey_name = dbkey
 #    else:
-#        dbkey_name = None
-    dbkey = params['param_dict']['dbkey'] 
+#        dbkey_name = None 
     dbkey_name = dbkey_description
     sequence_name = params['param_dict']['sequence_name']
     if not sequence_name:
