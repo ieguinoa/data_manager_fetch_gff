@@ -1,4 +1,4 @@
-<tool id="data_manager_fetch_gff" name="Create entries in gff data table" version="0.0.1" tool_type="manage_data">
+<tool id="data_manager_fetch_gff" name="Create entries in gff data table" version="0.0.2" tool_type="manage_data">
     <description>fetching</description>
     <command><![CDATA[
        python "$__tool_directory__"/data_manager_fetch_gff.py "${out_file}"
@@ -19,10 +19,10 @@
                 <param type="text" area="True" name="user_url" value="http://" label="URLs" optional="False" />
             </when>
             <when value="history">
-                <param name="input_fasta" type="data" format="fasta" label="FASTA File" multiple="False" optional="False" />
+                <param name="input_fasta" type="data" format="gff3,gtf,gff3.bz2,gff3.gz" label="GFF/GTF File" multiple="False" optional="False" />
             </when>
             <when value="directory">
-                <param type="text" name="fasta_filename" value="" label="Full path to FASTA File on disk" optional="False" />
+                <param type="text" name="fasta_filename" value="" label="Full path to GFF/GTF File on disk" optional="False" />
                 <param type="boolean" name="create_symlink" truevalue="create_symlink" falsevalue="copy_file" label="Create symlink to original data instead of copying" checked="False" />
             </when>
         </conditional>
